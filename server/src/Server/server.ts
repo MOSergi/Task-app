@@ -26,7 +26,7 @@ export class Server {
         const connection = dbConnectionConfig();
 
         try {
-            await connection.query('SELECT 1 + 1');
+            await connection.query('SELECT 1 + 1 AS WORKS');
         } catch (error){
             throw error;
         }
@@ -48,11 +48,18 @@ export class Server {
 
         if (err.status && err.message){
             res.status(err.status).json({
-                statuscode : err.status,
+                statusCode : err.status,
                 message : err.message
             })
+        } else if (err.errors[0].type === 'Validation error'){
+            console.log(err);
+            res.status(409).json({
+                field : err.errors[0].path,
+                message : err.errors[0].message
+            })
         } else {
-            res.status(err.status).json({
+            console.log(err)
+            res.status(500).json({
                 statuscode : 500,
                 message : 'Unexpected error'
             })
