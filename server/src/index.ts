@@ -1,6 +1,8 @@
-import http from "http";
+import dotenv from "dotenv";
+dotenv.config();
+import { Server } from "./Server/server";
 
-http.createServer((req, res)=>{
-    res.write("Hola mundo");
-    res.end();
-}).listen(8082);
+const app = new Server();
+
+app.startApp();
+app.listen();
