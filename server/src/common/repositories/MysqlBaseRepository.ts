@@ -16,7 +16,7 @@ interface UpdateParams {
     [key : string] : any
 }
 
-export class BaseRepository<M extends ModelStatic<Model<any, any>>> {
+export class MysqlBaseRepository<M extends ModelStatic<Model<any, any>>> {
 
     private model : M;
 

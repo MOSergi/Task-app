@@ -7,8 +7,8 @@ export class UsersActionService implements UsersActionServiceI {
 
     private readonly usersRepository : UsersRepository;
 
-    constructor(){
-        this.usersRepository = new UsersRepository();
+    constructor(userRepository : UsersRepository){
+        this.usersRepository = userRepository;
     }
 
     async create(params: CreateUserParams) {

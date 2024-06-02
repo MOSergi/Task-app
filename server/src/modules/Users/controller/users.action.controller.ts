@@ -5,8 +5,8 @@ import { bodyRequiredChecker } from "../../../common/utils/bodyChecker";
 export class UsersActionController {
     private readonly usersActionService : UsersActionService;
     
-    constructor(){
-        this.usersActionService = new UsersActionService();
+    constructor(usersActionService : UsersActionService){
+        this.usersActionService = usersActionService;
     }
 
     async createUsers(req : Request, res : Response){
