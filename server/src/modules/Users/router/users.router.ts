@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { asyncHandler } from "../../../common/utils/asyncHandler";
 import { UsersActionController } from "../controller/users.action.controller";
-import { CustomDependencyContainer } from "../../../common/dependenci_container/CustomeDependencyContainer";
+import { CustomDependencyContainer } from "../../../common/dependency_container/CustomeDependencyContainer";
 
 const usersRouter = Router();
 
