@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import { dbConnectionConfig } from "../../../db/config";
+import sequelizeConnection from "../../../db/config";
 
-const User = dbConnectionConfig().define('User', {
+const User = sequelizeConnection.define('User', {
     id : {
         type : DataTypes.INTEGER,
         autoIncrement : true,

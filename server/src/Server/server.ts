@@ -1,6 +1,6 @@
-import express, { Application, ErrorRequestHandler, NextFunction, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import cors, { CorsOptions } from "cors";
-import { dbConnectionConfig } from "../db/config";
+import sequelizeConnection from "../db/config";
 import appRouter from "../router/router";
 
 export class Server {
@@ -23,10 +23,8 @@ export class Server {
     }
 
     private async dbConnection(){
-        const connection = dbConnectionConfig();
-
         try {
-            await connection.query('SELECT 1 + 1 AS WORKS');
+            await sequelizeConnection.query('SELECT 1 + 1 AS WORKS');
         } catch (error){
             throw error;
         }
