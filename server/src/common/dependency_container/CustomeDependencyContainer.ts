@@ -1,4 +1,4 @@
-import { UsersRepository } from "../../modules/Users/repositorie/users.repository";
+import { UsersRepository } from "../../modules/Users/repository/users.repository";
 import { UsersActionService } from "../../modules/Users/services/users.action.service";
 
 export const CustomDependencyContainer = {

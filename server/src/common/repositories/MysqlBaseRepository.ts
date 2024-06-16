@@ -1,8 +1,7 @@
-import { Model, ModelStatic } from "sequelize";
-import { Where } from "sequelize/types/utils";
+import { FindOptions, Model, ModelStatic } from "sequelize";
 
-interface Conditions {
-    condition?: Where,
+export interface Conditions {
+    condition?: FindOptions,
     order?: string[],
     limit?: number,
     offset?: number
@@ -25,7 +24,14 @@ export class MysqlBaseRepository<M extends ModelStatic<Model<any, any>>> {
     }
 
     protected async findAll(params : Conditions) : Promise<Model<any, any>[]>{
-        const results = await this.model.findAll(params)
+        const findOptions = params.condition;
+
+        const results = await this.model.findAll({
+            ...findOptions,
+            order : params.order,
+            limit : params.limit,
+            offset : params.offset
+        });
         return results;
     }
 

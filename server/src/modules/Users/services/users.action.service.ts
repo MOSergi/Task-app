@@ -1,7 +1,8 @@
 import { ExceptionThrower } from "../../../common/utils/ExceptionThrower";
-import { UsersRepository } from "../repositorie/users.repository";
+import { UsersRepository } from "../repository/users.repository";
 import { CreateUserParams } from "./interfaces/CreateUserParams";
 import { UsersActionService as UsersActionServiceI } from "./interfaces/UsersActionService";
+import bcrypt from "bcryptjs";
 
 export class UsersActionService implements UsersActionServiceI {
 
@@ -37,8 +38,33 @@ export class UsersActionService implements UsersActionServiceI {
             })
         }
 
-        //Here we need to see if there is a user with that email and make a hash of the password
+        const searchedUser = await this.getUserByEmail(params.email);
 
-        await this.usersRepository.createUser({...params});
+        if (searchedUser.length !== 0){
+            new ExceptionThrower({
+                status : 409,
+                message : 'Invalid email. Try other'
+            })
+        }
+
+        const encrypTedPassword = bcrypt.hashSync(params.password, 10);
+
+        await this.usersRepository.createUser({
+            email : params.email,
+            name : params.name,
+            password : encrypTedPassword
+        });
+    }
+
+    async getUserByEmail(email : string){
+        const user = await this.usersRepository.getUsers({
+            condition : {
+                where : {
+                    email
+                }
+            }
+        });
+
+        return user;
     }
 }

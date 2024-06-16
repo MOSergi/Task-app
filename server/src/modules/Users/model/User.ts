@@ -26,5 +26,4 @@ const User = sequelizeConnection.define('User', {
     timestamps : false
 })
 
-User.sync();
 export default User;
