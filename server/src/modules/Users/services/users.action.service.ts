@@ -2,14 +2,17 @@ import { ExceptionThrower } from "../../../common/utils/ExceptionThrower";
 import { UsersRepository } from "../repository/users.repository";
 import { CreateUserParams } from "./interfaces/CreateUserParams";
 import { UsersActionService as UsersActionServiceI } from "./interfaces/UsersActionService";
+import { UsersReadService } from "./users.read.service";
 import bcrypt from "bcryptjs";
 
 export class UsersActionService implements UsersActionServiceI {
 
     private readonly usersRepository : UsersRepository;
+    private readonly usersReadService : UsersReadService
 
-    constructor(userRepository : UsersRepository){
+    constructor(userRepository : UsersRepository, usersReadService : UsersReadService){
         this.usersRepository = userRepository;
+        this.usersReadService = usersReadService;
     }
 
     async create(params: CreateUserParams) {
@@ -38,7 +41,7 @@ export class UsersActionService implements UsersActionServiceI {
             })
         }
 
-        const searchedUser = await this.getUserByEmail(params.email);
+        const searchedUser = await this.usersReadService.getUserByEmail(params.email);
 
         if (searchedUser.length !== 0){
             new ExceptionThrower({
@@ -54,17 +57,5 @@ export class UsersActionService implements UsersActionServiceI {
             name : params.name,
             password : encrypTedPassword
         });
-    }
-
-    async getUserByEmail(email : string){
-        const user = await this.usersRepository.getUsers({
-            condition : {
-                where : {
-                    email
-                }
-            }
-        });
-
-        return user;
     }
 }
