@@ -43,7 +43,7 @@ export class UsersActionService implements UsersActionServiceI {
 
         const searchedUser = await this.usersReadService.getUserByEmail(params.email);
 
-        if (searchedUser.length !== 0){
+        if (searchedUser){
             new ExceptionThrower({
                 status : 409,
                 message : 'Invalid email. Try other'

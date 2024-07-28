@@ -18,14 +18,10 @@ export class UsersReadService implements UserReadServiceI {
         });
 
         if (user.length === 0){
-            return [];
+            return null;
         }
 
 
-        const userResults = user.map((user)=>{
-            return user.dataValues;
-        })
-
-        return userResults;
+        return user[0];
     }
 }
