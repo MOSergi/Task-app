@@ -1,4 +1,3 @@
-import { User } from "../model/User.interface";
 import { UsersRepository } from "../repository/users.repository";
 import { UserReadService as UserReadServiceI } from "./interfaces/UserReadService";
 

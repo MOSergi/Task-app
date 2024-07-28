@@ -8,3 +8,12 @@ CREATE TABLE IF NOT EXISTS Users(
     email VARCHAR(75) NOT NULL,
     password VARCHAR(125) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS Tasks(
+    id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(50) NOT NULL,
+    description VARCHAR(200),
+    completed BOOLEAN,
+    userId INT(11),
+    FOREIGN KEY (userId) REFERENCES Users(id)
+);
