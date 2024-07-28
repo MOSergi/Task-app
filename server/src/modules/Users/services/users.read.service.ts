@@ -27,5 +27,5 @@ export class UsersReadService implements UserReadServiceI {
         })
 
         return userResults;
-    } 
+    }
 }
