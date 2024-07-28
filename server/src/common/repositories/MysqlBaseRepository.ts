@@ -15,7 +15,7 @@ interface UpdateParams {
     [key : string] : any
 }
 
-export class MysqlBaseRepository<M extends ModelStatic<Model<any, any>>> {
+export class MysqlBaseRepository<M extends ModelStatic<Model<any, any>>, T> {
 
     private model : M;
 
@@ -23,7 +23,7 @@ export class MysqlBaseRepository<M extends ModelStatic<Model<any, any>>> {
         this.model = model;
     }
 
-    protected async findAll(params : Conditions) : Promise<Model<any, any>[]>{
+    protected async findAll(params : Conditions) : Promise<Array<T>>{
         const findOptions = params.condition;
 
         const results = await this.model.findAll({
@@ -32,16 +32,26 @@ export class MysqlBaseRepository<M extends ModelStatic<Model<any, any>>> {
             limit : params.limit,
             offset : params.offset
         });
-        return results;
+
+        const parsedResults = results.map((result)=>{
+            return result.dataValues;
+        })
+
+        return parsedResults;
     }
 
-    protected async findById(id : number) : Promise<Model<any, any> | null>{
+    protected async findById(id : number) : Promise<T | null>{
         const result = await this.model.findOne({
             where : {
                 id : id
             }
         });
-        return result;
+
+        if (result){
+            return result.dataValues;
+        }
+
+        return null;
     }
 
     protected async create(params : CreateParams): Promise<void>{

@@ -1,8 +1,9 @@
 import { Conditions, MysqlBaseRepository } from "../../../common/repositories/MysqlBaseRepository";
 import User from "../model/User";
+import { User as UserI } from "../model/User.interface";
 import { CreateUserParams } from "../services/interfaces/CreateUserParams";
 
-export class UsersRepository extends MysqlBaseRepository<typeof User> {
+export class UsersRepository extends MysqlBaseRepository<typeof User, UserI> {
     constructor(){
         super(User);
     }
@@ -15,7 +16,7 @@ export class UsersRepository extends MysqlBaseRepository<typeof User> {
         });
     }
 
-    async getUsers(params : Conditions){
+    async getUsers(params : Conditions) {
         return await this.findAll(params);
     }
 }
