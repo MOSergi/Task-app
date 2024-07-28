@@ -11,7 +11,8 @@ describe('Users Action Service', () => {
     beforeEach(() => {
         usersRepository = {
             createUser : jest.fn(),
-            getUsers : jest.fn()
+            getUsers : jest.fn(),
+            updateUser : jest.fn()
         } as any;
 
         usersReadService = new UsersReadService(usersRepository);
@@ -98,5 +99,50 @@ describe('Users Action Service', () => {
                 message : 'Invalid email. Try other'
             });
         }
+    })
+    test('Should update User info', async ()=>{
+        const updateParams = {
+            name : "testName",
+            password : "TestPassword123"
+        }
+        const userId = 5;
+
+        usersRepository.getUsers.mockResolvedValue([
+            {
+                id : userId,
+                email : "test@test.com",
+                name : "test",
+                password : "TestPassword"
+            }
+        ]);
+
+        await usersActionService.updateUserById(userId, updateParams);
+
+        expect(usersRepository.updateUser).toHaveBeenCalledTimes(1);
+    })
+    test('Should throw an error if User password to update is to weak or short', async ()=>{
+        const updateParams = {
+            name : "testName",
+            password : "testpass"
+        }
+        const userId = 5;
+
+        usersRepository.getUsers.mockResolvedValue([
+            {
+                id : userId,
+                email : "test@test.com",
+                name : "test",
+                password : "TestPassword"
+            }
+        ]);
+
+        try {
+            await usersActionService.updateUserById(userId, updateParams);
+        } catch (e){
+            expect(e).toStrictEqual({
+                status : 400,
+                message : 'Password is to weak. Password must contain number, letters and Capital Letters'
+            })
+        }        
     })
 });
