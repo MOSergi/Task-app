@@ -1,6 +1,8 @@
 import { ExceptionThrower } from "../../../common/utils/ExceptionThrower";
+import { passwordValidator } from "../../../common/utils/passwordValidator";
 import { UsersRepository } from "../repository/users.repository";
 import { CreateUserParams } from "./interfaces/CreateUserParams";
+import { UpdateUserParams } from "./interfaces/UpdateUserParams";
 import { UsersActionService as UsersActionServiceI } from "./interfaces/UsersActionService";
 import { UsersReadService } from "./users.read.service";
 import bcrypt from "bcryptjs";
@@ -25,21 +27,7 @@ export class UsersActionService implements UsersActionServiceI {
             })
         }
 
-        if (params.password.length < 8){
-            new ExceptionThrower({
-                status : 400,
-                message : 'Password is to short'
-            })
-        }
-
-        const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/
-
-        if (!strongPasswordRegex.test(params.password)){
-            new ExceptionThrower({
-                status : 400,
-                message : 'Password is to weak. Password must contain number, letters and Capital Letters'
-            })
-        }
+        passwordValidator(params.password);
 
         const searchedUser = await this.usersReadService.getUserByEmail(params.email);
 
@@ -57,5 +45,31 @@ export class UsersActionService implements UsersActionServiceI {
             name : params.name,
             password : encrypTedPassword
         });
+    }
+
+    async updateUserById(userId : number, params : UpdateUserParams){
+        const user = await this.usersReadService.readById(userId);
+
+        if (!user){
+            new ExceptionThrower({
+                status : 409,
+                message : 'User provided doesnt exists'
+            })
+        }
+
+        const valuesToUpdate : UpdateUserParams = {};
+
+        if (params.name){
+            valuesToUpdate.name = params.name;
+        }
+
+        if (params.password){
+            passwordValidator(params.password);
+            valuesToUpdate.password = bcrypt.hashSync(params.password, 10)
+        }
+
+        await this.usersRepository.updateUser(userId, valuesToUpdate);
+
+        return await this.usersReadService.readById(userId);
     }
 }

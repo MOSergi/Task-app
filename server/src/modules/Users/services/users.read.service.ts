@@ -1,3 +1,4 @@
+import { User } from "../model/User.interface";
 import { UsersRepository } from "../repository/users.repository";
 import { UserReadService as UserReadServiceI } from "./interfaces/UserReadService";
 
@@ -21,6 +22,22 @@ export class UsersReadService implements UserReadServiceI {
             return null;
         }
 
+
+        return user[0];
+    }
+
+    async readById(id: number) {
+        const user = await this.usersRepository.getUsers({
+            condition : {
+                where : {
+                    id
+                }
+            }
+        })
+
+        if (!user){
+            return null;
+        }
 
         return user[0];
     }

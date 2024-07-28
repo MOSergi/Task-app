@@ -2,6 +2,7 @@ import { Conditions, MysqlBaseRepository } from "../../../common/repositories/My
 import User from "../model/User";
 import { User as UserI } from "../model/User.interface";
 import { CreateUserParams } from "../services/interfaces/CreateUserParams";
+import { UpdateUserParams } from "../services/interfaces/UpdateUserParams";
 
 export class UsersRepository extends MysqlBaseRepository<typeof User, UserI> {
     constructor(){
@@ -18,5 +19,9 @@ export class UsersRepository extends MysqlBaseRepository<typeof User, UserI> {
 
     async getUsers(params : Conditions) {
         return await this.findAll(params);
+    }
+
+    async updateUser(userId: number, params: UpdateUserParams) {
+        await this.update(userId, params);
     }
 }
