@@ -18,8 +18,9 @@ export const Task = sequelizeConnection.define('Task',
             type : DataTypes.BOOLEAN,
             defaultValue : false
         },
-        userId : {
-            type : DataTypes.INTEGER
+        user : {
+            type : DataTypes.INTEGER,
+            field : 'userId'
         }
     },
     {
