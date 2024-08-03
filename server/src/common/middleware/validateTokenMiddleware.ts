@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { ExceptionThrower } from "../utils/ExceptionThrower";
 
-interface RequestWithUserData extends Request {
+export interface RequestWithUserData extends Request {
     userData?: {
         id : number
         email : string,

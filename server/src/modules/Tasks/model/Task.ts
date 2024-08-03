@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelizeConnection from "../../../db/config";
 
-export const Task = sequelizeConnection.define('Task', 
+const Task = sequelizeConnection.define('Task', 
     {
         id : {
             type : DataTypes.INTEGER,
@@ -26,3 +26,5 @@ export const Task = sequelizeConnection.define('Task',
         timestamps : false
     }
 )
+
+export default Task;
