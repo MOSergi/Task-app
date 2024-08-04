@@ -50,4 +50,8 @@ export class TaskReadService implements TaskReadServiceI {
 
         return results;
     }
+
+    async readTaskById(taskId : number){
+        return await this.taskRepository.readTaskById(taskId);
+    }
 }

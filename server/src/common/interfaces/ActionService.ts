@@ -1,5 +1,5 @@
-export interface ActionService<T, P> {
-    create?: (params : P)=> Promise<void>;
-    updateById?: (id : number) => Promise<T>;
+export interface ActionService<T, C, U> {
+    create?: (params : C)=> Promise<void>;
+    updateById?: (id : number, params : U) => Promise<T>;
     deleteById?: (id : number) => Promise<void>;
 }

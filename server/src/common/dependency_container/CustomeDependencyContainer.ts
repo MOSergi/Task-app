@@ -16,8 +16,8 @@ const authActionService = new AuthActionService(usersReadService);
 
 //task
 const taskRepository = new TaskRepository();
-const taskActionService = new TaskActionService(taskRepository);
 const taskReadSerive = new TaskReadService(taskRepository);
+const taskActionService = new TaskActionService(taskRepository, taskReadSerive);
 
 export const CustomDependencyContainer = {
     usersActionService : usersActionService,
