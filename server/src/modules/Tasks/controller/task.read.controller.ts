@@ -11,9 +11,15 @@ export class TaskReadController {
     }
 
     async readTasks(req : RequestWithUserData, res : Response){
-        const [filters, limit, offset] = getQueryFiltersAndPagination(req);
+        const userId = req.userData!.id;
+        const { 
+            filters,
+            limit,
+            offset
+        } = getQueryFiltersAndPagination(req);
 
         const data = await this.taskReadService.read({
+            userId,
             filters,
             limit,
             offset
