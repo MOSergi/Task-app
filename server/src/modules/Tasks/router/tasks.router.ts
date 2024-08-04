@@ -15,5 +15,6 @@ const taskReadController = new TaskReadController(CustomDependencyContainer.task
 tasksRouter.post('/', validateTokenMiddleware, asyncHandler(tasksActionController.createTask.bind(tasksActionController)));
 tasksRouter.get('/', validateTokenMiddleware, asyncHandler(taskReadController.readTasks.bind(taskReadController)));
 tasksRouter.put('/:taskId', validateTokenMiddleware, asyncHandler(tasksActionController.updateTaskById.bind(tasksActionController)));
+tasksRouter.delete('/:taskId', validateTokenMiddleware, asyncHandler(tasksActionController.deleteTaskById.bind(tasksActionController)));
 
 export default tasksRouter;

@@ -25,4 +25,8 @@ export class TaskRepository extends MysqlBaseRepository<typeof Task, TaskI> {
     async readTaskById(taskId : number){
         return await this.findById(taskId);
     }
+
+    async deleteTaskById(taskId : number){
+        await this.deleteById(taskId);
+    }
 }

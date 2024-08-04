@@ -42,7 +42,10 @@ export class TaskReadService implements TaskReadServiceI {
             },
             includeModel : {
                 model : User,
-                required : true
+                required : true,
+                attributes : {
+                    exclude : ["password"]
+                }
             },
             limit : params.limit ? Number(params.limit) : 50,
             offset : params.offset ? Number(params.offset) : 0

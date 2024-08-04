@@ -57,4 +57,16 @@ export class TasksActionController {
             updatedTask
         })
     }
+
+    async deleteTaskById(req : RequestWithUserData, res : Response){
+        const userId = req.userData!.id;
+        const taskId = req.params.taskId;
+
+        await this.taskActionService.deleteByIdWithOwnerCheck(userId, Number(taskId));
+
+        res.status(200).json({
+            statusCode : 200,
+            message : `Task ${taskId} was deleted`
+        })
+    }
 }

@@ -34,11 +34,16 @@ export class TaskActionService implements TaskActionServiceI {
     }
 
     async updateById(id: number, params: UpdateTaskParams){
-        const task = await this.taskReadService.read({
-            userId : params.userId
-        });
+        const task = await this.taskReadService.readTaskById(id);
 
-        if(task.length === 0){
+        if (!task){
+            new ExceptionThrower({
+                status : 404,
+                message : 'Task doesnt exist'
+            })
+        }
+
+        if (task?.userId !== params.userId){
             new ExceptionThrower({
                 status : 409,
                 message : 'Invalid task to update. You are not the owner of the task'
@@ -64,5 +69,25 @@ export class TaskActionService implements TaskActionServiceI {
         const updatedTask = await this.taskReadService.readTaskById(id);
 
         return updatedTask!;
+    }
+
+    async deleteByIdWithOwnerCheck(userId : number, taskId : number){
+        const task = await this.taskReadService.readTaskById(taskId);
+
+        if (!task){
+            new ExceptionThrower({
+                status : 404,
+                message : 'Task doesnt exist'
+            })
+        }
+
+        if (task?.userId !== userId){
+            new ExceptionThrower({
+                status : 409,
+                message : 'Invalid task to delete. You are not the owner of the task'
+            })
+        }
+
+        await this.taskRepository.deleteTaskById(taskId);
     }
 }
