@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS Tasks(
     id INT(11) PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     description VARCHAR(200),
-    completed BOOLEAN,
+    completed INT(1),
     userId INT(11),
     FOREIGN KEY (userId) REFERENCES Users(id)
 );

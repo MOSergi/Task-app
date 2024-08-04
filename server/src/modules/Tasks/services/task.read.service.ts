@@ -29,9 +29,7 @@ export class TaskReadService implements TaskReadServiceI {
             }
 
             if (params.filters.completed){
-                filters.completed = {
-                    [Op.substring] : params.filters.completed 
-                };
+                filters.completed = params.filters.completed
             }
         }
 

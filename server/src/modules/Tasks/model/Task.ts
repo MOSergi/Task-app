@@ -15,8 +15,8 @@ const Task = sequelizeConnection.define('Task',
             type : DataTypes.STRING,
         },
         completed : {
-            type : DataTypes.BOOLEAN,
-            defaultValue : false
+            type : DataTypes.INTEGER,
+            defaultValue : 0
         },
         userId : {
             type : DataTypes.INTEGER

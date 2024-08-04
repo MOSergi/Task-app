@@ -3,7 +3,7 @@ export interface GetTaskParams {
     filters?: {
         title : string,
         description : string,
-        completed : boolean
+        completed : string
     },
     limit?: string,
     offset?: string
