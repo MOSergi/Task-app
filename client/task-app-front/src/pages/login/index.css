@@ -1,0 +1,21 @@
+#login {
+    height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginForm {
+    width: 350px;
+    max-height: 250px;
+    row-gap: 10px;
+}
+
+.loginInputs {
+    width: 310px;
+}
+
+.loginBtn {
+    width: 275px;
+}
