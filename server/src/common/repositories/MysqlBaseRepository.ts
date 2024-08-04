@@ -1,6 +1,7 @@
-import { Filterable, Includeable, Model, ModelStatic } from "sequelize";
+import { Filterable, FindAttributeOptions, Includeable, Model, ModelStatic } from "sequelize";
 
 export interface Conditions {
+    selectColumns?: FindAttributeOptions,
     condition?: Filterable,
     includeModel?: Includeable,
     order?: string[],
@@ -28,6 +29,7 @@ export class MysqlBaseRepository<M extends ModelStatic<Model<any, any>>, T> {
         const findOptions = params.condition;
 
         const results = await this.model.findAll({
+            attributes : params.selectColumns,
             ...findOptions,
             include : params.includeModel,
             order : params.order,
